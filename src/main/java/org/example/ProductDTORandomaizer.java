@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.DTO.ProductDTO;
+
 import java.util.Random;
 
 public class ProductDTORandomaizer {

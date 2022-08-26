@@ -1,4 +1,7 @@
-package org.example;
+package org.example.DTO;
+
+import org.example.ownValidator.Check;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 
@@ -6,6 +9,7 @@ public class ProductDTO {
     private int productId;
     private String name;
     private int type;
+
     public void setProductId (int id){
         this.productId = id;
     }
@@ -21,7 +25,9 @@ public class ProductDTO {
     }
 
     @NotBlank
-    @Pattern(regexp = "[a-z-A-Z]*", message = "ProductDTO's name has invalid characters")
+    @Pattern(regexp = "[a-z-A-Z-0-9]*", message = "ProductDTO's name has invalid characters")
+    @Length(min = 1,max = 50,message = "Invalid ProductDTO's Name, too many characters")
+    @Check(3)
     public String getName() {
         System.out.println(this.name);
         return this.name;

@@ -1,14 +1,30 @@
 package org.example;
 
+import org.example.DTO.ProductDTO;
+import org.example.DTO.StoreDTO;
+import org.example.DTO.TypeDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.sql.*;
 
 public class DbHandler {
     public void DbHandler (){
+
     }
     Connection connection;
-    private static int productAmount;
-    private static int forStoreId = 1;
-    public void Connect () {
+    private  int productAmount;
+    private  int forStoreId = 1;
+
+    Logger logger = LoggerFactory.getLogger(DbHandler.class);
+
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    Validator validator = factory.getValidator();
+
+    public void connect() {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/storedb", "root", "1234");
             connection.setAutoCommit(false);
@@ -18,47 +34,48 @@ public class DbHandler {
         }
     }
 
-    public void addTypes (){
-        try {
-            Statement statement = connection.createStatement();
-
-            statement.addBatch("INSERT INTO type (TYPE) VALUES ('private')");
-            statement.addBatch("INSERT INTO type (TYPE) VALUES ('suspension')");
-            statement.addBatch("INSERT INTO type (TYPE) VALUES ('congestive')");
-            statement.addBatch("INSERT INTO type (TYPE) VALUES ('tubers')");
-            statement.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void addProducts(int productCount){
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO product(name, type) VALUES (?, ?)");
-            for(int i = 0; i < productCount; i++){
-                ProductDTO productDTo = new ProductDTO();
-                ProductDTORandomaizer productDTORandomaizer= new ProductDTORandomaizer();
-                productDTo = productDTORandomaizer.createDTO();
-                preparedStatement.setString(1, productDTo.getName());
-                preparedStatement.setInt(2, productDTo.getType());
+    public void addTypes (TypeDTO typeDTO, boolean checked){
+        if(checked) {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO type (TYPE) VALUES (?)");
+                preparedStatement.setString(1, typeDTO.getType());
                 preparedStatement.execute();
                 connection.commit();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
         }
-        productAmount = productCount;
-    }
-    public void addStore(String storeName, String storeAddress){
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO store (name, adress) VALUES (?,?)");
-            preparedStatement.setString(1, storeName);
-            preparedStatement.setString(2, storeAddress);
-            preparedStatement.execute();
-            connection.commit();
 
-            addProductsToStore(forStoreId);
-            forStoreId++;
+    }
+    public void addProduct(ProductDTO productDTO, boolean checked){
+        try {
+
+            if (checked){
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO product(name, type) VALUES (?, ?)");
+                preparedStatement.setString(1, productDTO.getName());
+                preparedStatement.setInt(2, productDTO.getType());
+                preparedStatement.execute();
+                connection.commit();
+                productAmount ++;
+                }
+
+             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+    }
+    public void addStore(StoreDTO storeDTO, boolean checked){
+        try {
+            if(checked) {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO store (name, adress) VALUES (?,?)");
+                preparedStatement.setString(1, storeDTO.getName());
+                preparedStatement.setString(2, storeDTO.getAddress());
+                preparedStatement.execute();
+                connection.commit();
+
+                addProductsToStore(forStoreId);
+                forStoreId++;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -88,7 +105,7 @@ public class DbHandler {
 
                 String name = resultSet.getString("adress");
 
-                System.out.println(name);
+               logger.info(name);
             }
 
         } catch (SQLException e) {
@@ -96,13 +113,4 @@ public class DbHandler {
         }
     }
 
-    /*public void clearTables() {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute("TRUNCATE TABLE ");
-            connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 }
