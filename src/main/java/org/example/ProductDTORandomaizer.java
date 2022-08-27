@@ -28,7 +28,7 @@ public class ProductDTORandomaizer {
         return productDTO;
     }
 
-    public static String getRandomString(){
+    public  String getRandomString(){
         int length = 40;
         String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder sb=new StringBuilder();

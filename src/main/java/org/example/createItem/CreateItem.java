@@ -3,7 +3,6 @@ package org.example.createItem;
 import org.example.DTO.StoreDTO;
 import org.example.DTO.TypeDTO;
 import org.example.DTO.ProductDTO;
-import org.example.DbHandler;
 import org.example.ProductDTORandomaizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
