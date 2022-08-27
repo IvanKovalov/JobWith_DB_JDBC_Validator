@@ -24,8 +24,8 @@ public class App
         DbHandler dbHandler = new DbHandler();
 
         dbHandler.connect();
-
-
+        /*dbHandler.dropTables();
+        dbHandler.createTables();*/
         TypeDTO typeDTO = createItem.createType("private");
         TypeDTO typeDTO1 = createItem.createType("suspension");
         TypeDTO typeDTO2 = createItem.createType("congestive");

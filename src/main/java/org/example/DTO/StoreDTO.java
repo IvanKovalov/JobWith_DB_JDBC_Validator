@@ -2,6 +2,8 @@ package org.example.DTO;
 
 
 
+import org.example.ownValidator.Check;
+
 import javax.validation.constraints.*;
 
 public class StoreDTO {
