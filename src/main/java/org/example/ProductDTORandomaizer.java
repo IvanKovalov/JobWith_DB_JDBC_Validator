@@ -14,7 +14,7 @@ public class ProductDTORandomaizer {
     static Random random=new Random();
     int amountProduct = 0;
 
-    Logger logger = LoggerFactory.getLogger(ProductDTORandomaizer.class);
+    final static Logger logger = LoggerFactory.getLogger(ProductDTORandomaizer.class);
     public ProductDTO createDTO() {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setName(getRandomString());

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class CreateItem {
 
-    Logger logger = LoggerFactory.getLogger(CreateItem.class);
+    final static Logger logger = LoggerFactory.getLogger(CreateItem.class);
     public StoreDTO createStore(String name, String address){
         StoreDTO storeDTO = new StoreDTO();
         storeDTO.setAddress(address);

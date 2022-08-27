@@ -22,7 +22,7 @@ public class DbHandler {
     private  int productAmount;
     private  int forStoreId = 1;
 
-    Logger logger = LoggerFactory.getLogger(DbHandler.class);
+    final static Logger logger = LoggerFactory.getLogger(DbHandler.class);
 
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();

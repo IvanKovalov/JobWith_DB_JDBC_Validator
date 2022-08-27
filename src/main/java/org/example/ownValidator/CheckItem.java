@@ -19,10 +19,11 @@ public class CheckItem {
     public boolean check(Object objectForCheck){
         Set<ConstraintViolation<Object>> violations = validator.validate(objectForCheck);
         for (ConstraintViolation<Object> violation : violations) {
-            if(violation.getMessage() == null){
+            logger.info(violation.getMessage());
+            if(violation.getMessage() != null){
                 return false;
             }
-            logger.info(violation.getMessage());
+
         }
         return true;
     }

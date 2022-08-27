@@ -26,7 +26,7 @@ public class StoreDTO {
     }
 
 
-    @NotBlank
+    @NotBlank(message = "Name can't be empty")
     @Pattern(regexp = "[a-z-A-Z]*", message = "StoreDTO's name has invalid characters")
     public String getName() {
         return name;
@@ -36,7 +36,7 @@ public class StoreDTO {
         return idStore;
     }
 
-    @NotBlank
+    @NotBlank(message = "Address can't be empty")
     //@Pattern(regexp = "[a-z-A-Z-0-9]*", message = "StoreDTO's address has invalid characters")
     public String getAddress() {
         return address;

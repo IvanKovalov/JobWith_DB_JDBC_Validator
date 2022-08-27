@@ -22,7 +22,7 @@ public class TypeDTO {
         return idType;
     }
 
-    @NotBlank
+    @NotBlank(message = "Type can't be empty")
     @Pattern(regexp = "[a-z-A-Z]*", message = "TypeDTO's type has invalid characters")
     public String getType() {
         return type;
