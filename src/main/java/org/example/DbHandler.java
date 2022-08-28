@@ -41,7 +41,7 @@ public class DbHandler {
     public void addTypes (TypeDTO typeDTO, boolean checked){
         if(checked) {
             try {
-                try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO type (TYPE) VALUES (?)")) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO typetest (TYPE) VALUES (?)")) {
                     preparedStatement.setString(1, typeDTO.getType());
                     preparedStatement.execute();
                 }
@@ -57,7 +57,7 @@ public class DbHandler {
         try {
 
             if (checked){
-                try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO product(name, type) VALUES (?, ?)")) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO producttest(name, typetest) VALUES (?, ?)")) {
                     preparedStatement.setString(1, productDTO.getName());
                     preparedStatement.setInt(2, productDTO.getType());
                     preparedStatement.execute();
@@ -73,7 +73,7 @@ public class DbHandler {
     public void addStore(StoreDTO storeDTO, boolean checked){
         try {
             if(checked) {
-                try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO store (name, adress) VALUES (?,?)")) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO storetest (name, adress) VALUES (?,?)")) {
                     preparedStatement.setString(1, storeDTO.getName());
                     preparedStatement.setString(2, storeDTO.getAddress());
                     preparedStatement.execute();
@@ -91,7 +91,7 @@ public class DbHandler {
 
     public  void addProductsToStore (int storeId) {
         try {
-            try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO store_has_products (idstore, idproducts) VALUES (?,?)")) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO store_has_productstest (idstoretest, idproductstest) VALUES (?,?)")) {
                 int amountOfInsertProducts = (int) (1 + Math.random() * (productAmount - 1));
                 for (int i = 1; i <= amountOfInsertProducts; i++) {
                     preparedStatement.setInt(1, storeId);
@@ -99,7 +99,7 @@ public class DbHandler {
                     preparedStatement.execute();
                     connection.commit();
                 }
-                logger.info("Added in table store_has_products for storeId {} products", storeId);
+                logger.info("Added  products in table store_has_products for storeId {}", storeId);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,7 +108,7 @@ public class DbHandler {
 
     public void searchStoreWithTheMostTypes(String typeOfProduct){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT adress  from (select  adress, count(t.type) as c from store left join store_has_products shp on store.idStore = shp.idStore left join product p on p.idProduct = shp.idProducts left join type t on t.idType = p.type where t.type = ? group by adress)s  order by c desc limit 1;");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT adress  from (select  adress, count(t.type) as c from storetest left join store_has_productstest shp on storetest.idStore = shp.idStoretest left join producttest p on p.idProduct = shp.idProductstest left join typetest t on t.idType = p.typetest where t.type = ? group by adress)s  order by c desc limit 1;");
             preparedStatement.setString(1,typeOfProduct);
             ResultSet resultSet = preparedStatement.executeQuery();
             logger.info("Execute sql request");

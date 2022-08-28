@@ -24,8 +24,8 @@ public class App
         DbHandler dbHandler = new DbHandler();
 
         dbHandler.connect();
-        /*dbHandler.dropTables();
-        dbHandler.createTables();*/
+        dbHandler.dropTables();
+        dbHandler.createTables();
         TypeDTO typeDTO = createItem.createType("private");
         TypeDTO typeDTO1 = createItem.createType("suspension");
         TypeDTO typeDTO2 = createItem.createType("congestive");
@@ -36,7 +36,7 @@ public class App
         dbHandler.addTypes(typeDTO3, checkItem.check(typeDTO3));
 
 
-        int productCount = 10;
+        int productCount = 100;
         for(int i = 0; i < productCount; i++) {
             ProductDTO productDTO = createItem.createProduct();
             checkItem.check(productDTO);

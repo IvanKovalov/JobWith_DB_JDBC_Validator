@@ -29,7 +29,6 @@ public class ProductDTO {
     @Length(min = 1,max = 50,message = "Invalid ProductDTO's Name, too many characters")
     @Check(3)
     public String getName() {
-        System.out.println(this.name);
         return this.name;
     }
 
