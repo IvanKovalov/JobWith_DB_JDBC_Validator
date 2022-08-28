@@ -1,14 +1,6 @@
 
-E
-src/sql/storetest.sql,f\7\f7e7f7ccbef04a6cf30be5106a152b33da0241cb
-G
-src/sql/productTest.sql,e\6\e63a514e700c833e2a1185c902affceb325d6997
->
-src/sql/db.sql,6\e\6e2511f4af9f8f6c97f82ec01bc8261b695fd8c4
 ]
 -src/test/java/org/example/CreateItemTest.java,d\c\dc0ae80db832c5119a1082af5f3e502671407407
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 h
 8src/test/java/org/example/TestProductDTORandomaizer.java,7\9\79506da358c7d34ecf54a7be5cc1f205a15bf63e
 V
@@ -29,3 +21,11 @@ e
 +src/main/java/org/example/DTO/StoreDTO.java,b\2\b2e7be6a440ac17e15152204e57baa26754b4375
 d
 4src/main/java/org/example/createItem/CreateItem.java,f\d\fd5b45e51fcf7e90c400f0de285bfa81b65a709e
+S
+#src/main/resources/sql/typetest.sql,7\8\78a68473c4cb4a51f16a6245c5732d9a081e8c88
+]
+-src/main/java/org/example/DTO/ProductDTO.java,b\f\bf0de2b2b4c2186e4f50ef6960a58f4c4493d7d5
+d
+4src/main/java/org/example/ProductDTORandomaizer.java,9\9\997482d7347262ebd0a76fdf28354e7645fec107
+]
+-src/main/resources/sql/store_has_products.sql,2\7\27ea2e9aa30d33bb2a06a272de684630d003c9f4

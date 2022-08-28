@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/storedb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@46.119.86.45" uuid="24b2522a-2eda-4c9e-aa6e-b90550fd88d4">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://46.119.86.45:17306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -9,10 +9,13 @@ import org.slf4j.LoggerFactory;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+
 
 public class DbHandler {
     public void DbHandler (){
@@ -22,14 +25,14 @@ public class DbHandler {
     private  int productAmount;
     private  int forStoreId = 1;
 
-    final static Logger logger = LoggerFactory.getLogger(DbHandler.class);
+    static final Logger logger = LoggerFactory.getLogger(DbHandler.class);
 
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
 
-    public void connect() {
+    public void connect(String url, String user, String password) {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/storedb", "root", "1234");
+            connection = DriverManager.getConnection(url, user, password);
             connection.setAutoCommit(false);
             logger.info("connected to database");
         }
@@ -130,21 +133,22 @@ public class DbHandler {
         String contentStore;
         String contentStore_has_product;
         try {
-            contentType = new String(Files.readAllBytes(Paths.get("src/sql/typetest.sql")));
-            contentProduct = new String(Files.readAllBytes(Paths.get("src/sql/productTest.sql")));
-            contentStore = new String(Files.readAllBytes(Paths.get("src/sql/storetest.sql")));
-            contentStore_has_product =  new String(Files.readAllBytes(Paths.get("src/sql/store_has_products.sql")));
+            contentType = new String(Files.readAllBytes(Paths.get("target/classes/sql/typetest.sql")));
+            contentProduct = new String(Files.readAllBytes(Paths.get("target/classes/sql/productTest.sql")));
+            contentStore = new String(Files.readAllBytes(Paths.get("target/classes/sql/storetest.sql")));
+            contentStore_has_product =  new String(Files.readAllBytes(Paths.get("target/classes/sql/store_has_products.sql")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
 
         try {
-            Statement statement = connection.createStatement();
-            statement.execute(contentType);
-            statement.execute(contentProduct);
-            statement.execute(contentStore);
-            statement.execute(contentStore_has_product);
+            try (Statement statement = connection.createStatement()) {
+                statement.execute(contentType);
+                statement.execute(contentProduct);
+                statement.execute(contentStore);
+                statement.execute(contentStore_has_product);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -164,6 +168,16 @@ public class DbHandler {
         }
 
     }
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 
 }

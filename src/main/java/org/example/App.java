@@ -16,14 +16,14 @@ public class App
 
     public static void main( String[] args )
     {
-
-
+        ReadProperty readProperty = new ReadProperty();
+        readProperty.getInfo();
         CreateItem createItem = new CreateItem();
         CheckItem checkItem = new CheckItem();
 
         DbHandler dbHandler = new DbHandler();
 
-        dbHandler.connect();
+        dbHandler.connect(readProperty.getUrl(), readProperty.getUser(), readProperty.getPassword());
         dbHandler.dropTables();
         dbHandler.createTables();
         TypeDTO typeDTO = createItem.createType("private");
@@ -52,21 +52,8 @@ public class App
         dbHandler.addStore(storeDTO1, checkItem.check(storeDTO1));
         dbHandler.addStore(storeDTO2, checkItem.check(storeDTO2));
 
-        dbHandler.searchStoreWithTheMostTypes("private");
+        dbHandler.searchStoreWithTheMostTypes(args[0]);
 
     }
 }
 
-
-   /* SET FOREIGN_KEY_CHECKS = 0;
-    TRUNCATE table store_has_products;
-        TRUNCATE table store;
-        TRUNCATE table type;
-        TRUNCATE table product;
-
-        SET FOREIGN_KEY_CHECKS = 1;
-        select * from type;
-        select * from store;
-
-        SELECT adress  from (select  adress, count(t.type) as c from store left join store_has_products shp on store.idStore = shp.idStore left join product p on p.idProduct = shp.idProducts left join type t on t.idType = p.type where t.type = 'private' group by adress)s  order by c desc limit 1;
-        select * from store left join store_has_products shp on store.idStore = shp.idStore left join product p on p.idProduct = shp.idProducts left join type t on t.idType = p.type*/
